@@ -1,2 +1,3 @@
 .venv
 .env
+.tool_cache
