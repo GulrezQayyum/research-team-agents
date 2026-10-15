@@ -1,7 +1,7 @@
 import os
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
-from langchain_core.messages import HumanMessage, SystemMessage, AIMessage
+from langchain_core.messages import HumanMessage, SystemMessage, AIMessage, ToolMessage
 from langchain_groq import ChatGroq
 from langchain_core.tools import tool
 from duckduckgo_search import DDGS
@@ -70,6 +70,48 @@ def web_search(query: str) -> str:
 
 print(f"Tool Name: {web_search.name}")
 print(f"Tool Description (what LLM sees): {web_search.description}")
+
+print("\n --- Step 3: Manual ReAct Loop ---")
+
+llm_with_tools = run_llm_check().bind_tools([web_search])
+
+react_messages = [
+    SystemMessage(
+        content="You are a concise, helpful technical assistant. Use the provided tools to answer questions."
+    ),
+    HumanMessage(content="What is the latest news about Groq's AI hardware?"),
+]
+
+step1_response = llm_with_tools.invoke(react_messages)
+
+total_input_tokens += step1_response.usage_metadata.get("input_tokens", 0)
+total_output_tokens += step1_response.usage_metadata.get("output_tokens", 0)
+
+print("Model produced tool call requests:")
+for tool_call in step1_response.tool_calls:
+    print(f" - Tool Name: {tool_call['name']}")
+    print(f" - Tool Call Args: {tool_call['args']}")
+    print(f" - Tool Call ID: {tool_call['id']}")
+
+react_messages.append(step1_response)
+
+for tool_call in step1_response.tool_calls:
+    if tool_call["name"] == web_search.name:
+        tool_output = web_search.invoke(tool_call["args"])
+
+        react_messages.append(
+            ToolMessage(
+                content=str(tool_output),
+                tool_call_id=tool_call["id"],
+                name=tool_call["name"],
+            )
+        )
+
+final_response = llm_with_tools.invoke(react_messages)
+total_input_tokens += final_response.usage_metadata.get("input_tokens", 0)
+total_output_tokens += final_response.usage_metadata.get("output_tokens", 0)
+
+print(f"\nFinal Answer:\n{final_response.content}")
 
 print("--- Summary ---")
 print(f"Cumulative Input Tokens : {total_input_tokens}")
