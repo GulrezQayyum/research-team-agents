@@ -1,32 +1,30 @@
-import os
-from pydantic import BaseModel, Field
-from dotenv import load_dotenv
-from langchain_core.messages import HumanMessage, SystemMessage, AIMessage, ToolMessage
-from langchain_groq import ChatGroq
-from langchain_core.tools import tool
-from duckduckgo_search import DDGS
+import hashlib
 import json
 from pathlib import Path
-import hashlib
+from typing import Literal
+
+from dotenv import load_dotenv
+from duckduckgo_search import DDGS
+from langchain_core.messages import HumanMessage, SystemMessage, ToolMessage
+from langchain_core.tools import tool
+from langchain_groq import ChatGroq
+from pydantic import BaseModel, Field
 
 load_dotenv()
 
-def run_llm_check():
-    llm = ChatGroq(
-        model_name="openai/gpt-oss-20b",
-        temperature=0.0
-    )
+llm = ChatGroq(model_name="openai/gpt-oss-20b", temperature=0.0)
 
-    return llm
 
 print("--- STEP 1: Basic Call & Token Tracking ---")
 
 messages = [
     SystemMessage(content="You are a concise, helpful technical assistant."),
-    HumanMessage(content="Explain the difference between a process and a thread in two sentences.")
+    HumanMessage(
+        content="Explain the difference between a process and a thread in two sentences."
+    ),
 ]
 
-response = run_llm_check().invoke(messages)
+response = llm.invoke(messages)
 
 print(f"Content:\n{response.content}\n")
 print(f"Usage Metadata: {response.usage_metadata}")
@@ -34,15 +32,17 @@ print(f"Usage Metadata: {response.usage_metadata}")
 total_input_tokens = response.usage_metadata.get("input_tokens", 0)
 total_output_tokens = response.usage_metadata.get("output_tokens", 0)
 
-print("\n --- Step 2: Defined Web Search Tool with Disk Cache ---")
+
+print("\n--- STEP 2: Defined Web Search Tool with Disk Cache ---")
 
 CACHE_DIR = Path(".tool_cache")
 CACHE_DIR.mkdir(exist_ok=True)
 
+
 @tool
 def web_search(query: str) -> str:
     """Search DuckDuckGo for real-time information, recent news, or factual facts.
-    
+
     Args:
         query: Clear, specific search terms to look up.
     """
@@ -54,30 +54,39 @@ def web_search(query: str) -> str:
         return cache_file.read_text(encoding="utf-8")
 
     print(f"[CACHE MISS] Fetching real DuckDuckGo search for: '{query}'")
-    
+
     with DDGS() as ddgs:
         results = list(ddgs.text(query, max_results=3))
-        
+
     if not results:
         formatted_result = "No search results found."
     else:
         formatted_result = "\n\n".join(
-            [f"Title: {r['title']}\nSnippet: {r['body']}\nLink: {r['href']}" for r in results]
+            [
+                f"Title: {r['title']}\nSnippet: {r['body']}\nLink: {r['href']}"
+                for r in results
+            ]
         )
-    
+
     cache_file.write_text(formatted_result, encoding="utf-8")
     return formatted_result
+
 
 print(f"Tool Name: {web_search.name}")
 print(f"Tool Description (what LLM sees): {web_search.description}")
 
-print("\n --- Step 3: Manual ReAct Loop ---")
 
-llm_with_tools = run_llm_check().bind_tools([web_search])
+print("\n--- STEP 3: Manual ReAct Loop ---")
+
+llm_with_tools = llm.bind_tools([web_search])
 
 react_messages = [
     SystemMessage(
-        content="You are a concise, helpful technical assistant. Use the provided tools to answer questions."
+        content=(
+            "You are a helpful technical assistant. "
+            "When tool results are provided to you, synthesize them into a clear text answer. "
+            "Do NOT issue any further tool calls once you receive the search results."
+        )
     ),
     HumanMessage(content="What is the latest news about Groq's AI hardware?"),
 ]
@@ -111,9 +120,62 @@ final_response = llm_with_tools.invoke(react_messages)
 total_input_tokens += final_response.usage_metadata.get("input_tokens", 0)
 total_output_tokens += final_response.usage_metadata.get("output_tokens", 0)
 
-print(f"\nFinal Answer:\n{final_response.content}")
+final_text = final_response.content
+if not final_text and final_response.tool_calls:
+    final_text = str(final_response.tool_calls[0].get("args", {}))
 
-print("--- Summary ---")
+print(f"\nFinal Answer:\n{final_text if final_text else 'No response content generated.'}")
+print("\n--- STEP 4: Structured Output (10 Runs) ---")
+
+
+class RoutingDecision(BaseModel):
+    """Router classification schema for supervisor nodes."""
+
+    reasoning: str = Field(
+        description="Brief explanation of why this route was selected."
+    )
+    next_node: Literal["search_agent", "code_agent", "final_responder"] = Field(
+        description="The target worker node to route the conversation to."
+    )
+
+
+structured_llm = llm.with_structured_output(RoutingDecision, method="json_mode")
+
+sample_prompts = [
+    "Find the current status of AAPL stock.",
+    "Write a Python script to invert a binary tree.",
+    "Summarize what we have discussed so far.",
+    "Search for recent papers on LLM agents.",
+    "Debug this memory leak in my C++ array.",
+    "Give me the final summary report.",
+    "Look up recent developments in quantum computing.",
+    "Implement quicksort algorithm in Rust.",
+    "Thank you, I have all the answers I need.",
+    "Lookup documentation for FastAPI request validation.",
+]
+
+for idx, user_prompt in enumerate(sample_prompts, start=1):
+    result: RoutingDecision = structured_llm.invoke(
+        [
+            SystemMessage(
+                content=(
+                    "You are a router. Return JSON matching this schema:\n"
+                    "{\n"
+                    '  "reasoning": "string",\n'
+                    '  "next_node": "search_agent" | "code_agent" | "final_responder"\n'
+                    "}"
+                )
+            ),
+            HumanMessage(content=user_prompt),
+        ]
+    )
+    print(f"Run {idx:02d} | Input: '{user_prompt}'")
+    print(
+        f"       -> Route: [{result.next_node}] | Reason: {result.reasoning}\n"
+    )
+
+
+print("--- SUMMARY ---")
 print(f"Cumulative Input Tokens : {total_input_tokens}")
 print(f"Cumulative Output Tokens: {total_output_tokens}")
 print(f"Total Tokens Used       : {total_input_tokens + total_output_tokens}")
