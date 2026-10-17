@@ -7,7 +7,7 @@ CACHE_DIR = Path(".tool_cache")
 CACHE_DIR.mkdir(exist_ok=True)
 
 @tool
-def web_serach(query: str) -> str:
+def web_search(query: str) -> str:
     """Search DuckDuckGo for real-time information, recent news, or factual facts.
 
     Args:
