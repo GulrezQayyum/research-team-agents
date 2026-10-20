@@ -1,6 +1,6 @@
 # Research Team Agents
 
-An implementation of a multi-turn ReAct (Reasoning + Acting) loop and structured output supervisor router built with **LangChain**, **LangGroq**, and **Pydantic**.
+An implementation of a multi-turn ReAct (Reasoning + Acting) loop and structured output supervisor router  with **LangChain**, **LangGroq**, and **Pydantic**.
 
 ##  Project Overview
 
