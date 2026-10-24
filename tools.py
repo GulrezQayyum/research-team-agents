@@ -1,6 +1,6 @@
 import hashlib
 from pathlib import Path
-from ddgs import DDGS
+from duckduckgo_search import DDGS
 from langchain_core.tools import tool
 
 CACHE_DIR = Path(".tool_cache")
@@ -27,17 +27,24 @@ def web_search(query: str) -> str:
         with DDGS() as ddgs:
             results = list(ddgs.text(query_clean, max_results=3))
     except Exception as e:
-        error_msg = f"Error: Web search failed due to exception: {str(e)}"
+        error_msg = f"Search tool failed due to exception: {str(e)}"
         print(f"[SEARCH ERROR] {error_msg}")
-        return error_msg  
+        return error_msg  # Return to model; DO NOT CACHE
 
     if not results:
         print(f"[SEARCH BLANK] No results returned for '{query_clean}'. Not caching.")
         return "No search results found."
 
     formatted_results = "\n\n".join(
-        [f"Title: {r.get('title', '')}\nSnippet: {r.get('body', '')}\nLink: {r.get('href', '')}" for r in results]
+        [
+            f"Title: {r.get('title', '')}\nSnippet: {r.get('body', '')}\nLink: {r.get('href', '')}"
+            for r in results
+        ]
     )
+
+    max_chars = 2500
+    if len(formatted_results) > max_chars:
+        formatted_results = formatted_results[:max_chars] + "\n...[Truncated for length]"
 
     cache_file.write_text(formatted_results, encoding="utf-8")
     return formatted_results
