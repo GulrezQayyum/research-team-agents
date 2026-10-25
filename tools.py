@@ -1,6 +1,7 @@
 import hashlib
+import time
 from pathlib import Path
-from duckduckgo_search import DDGS
+from ddgs import DDGS
 from langchain_core.tools import tool
 
 CACHE_DIR = Path(".tool_cache")
@@ -23,13 +24,16 @@ def web_search(query: str) -> str:
 
     print(f"[CACHE MISS] Executing real search for: '{query_clean}'")
 
+    time.sleep(1.5)
+
+    results = []
     try:
         with DDGS() as ddgs:
             results = list(ddgs.text(query_clean, max_results=3))
     except Exception as e:
         error_msg = f"Search tool failed due to exception: {str(e)}"
         print(f"[SEARCH ERROR] {error_msg}")
-        return error_msg  # Return to model; DO NOT CACHE
+        return error_msg  
 
     if not results:
         print(f"[SEARCH BLANK] No results returned for '{query_clean}'. Not caching.")

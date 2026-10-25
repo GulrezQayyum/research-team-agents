@@ -16,7 +16,8 @@ SYSTEM_PROMPT = SystemMessage(
     "Rules:\n"
     "1. Write a 400 to 600 word detailed report based on your research.\n"
     "2. Provide explicit URL citations (e.g., [Title](URL)) for every claim.\n"
-    "3. NEVER cite a source or URL that did not appear in actual search results."
+    "3. NEVER cite a source or URL that did not appear in actual search results.\n"
+    "4. If search results return empty or error, synthesize whatever partial knowledge you have or state limitations clearly."
 )
 
 llm = get_llm()
@@ -31,15 +32,20 @@ def llm_node(state: AgentState) -> Dict[str, List[BaseMessage]]:
         messages = [SYSTEM_PROMPT] + messages
         
     response = llm_with_tools.invoke(messages)
-
-    if hasattr(response, "usage_metadata") and response.usage_metadata:
-        tracker.add_usage(response.usage_metadata)
-        
     return {"messages": [response]}
 
 def route_tools(state: AgentState) -> str:
     """Routing function: go to 'tools' if tool calls exist, else END."""
-    last_message = state["messages"][-1]
+    messages = state["messages"]
+    last_message = messages[-1]
+
+    ai_tool_turns = sum(
+        1 for msg in messages if isinstance(msg, AIMessage) and msg.tool_calls
+    )
+
+    if ai_tool_turns >= 4:
+        return END
+    
     if isinstance(last_message, AIMessage) and last_message.tool_calls:
         return "tools"
     return END
@@ -69,18 +75,16 @@ def run_agent_with_metrics(topic: str, max_searches: int = 4) -> Dict[str, Any]:
     start_time = time.time()
     
     initial_user_msg = HumanMessage(
-        content=(
-            f"Research topic: {topic}\n"
-            f"Use at most {max_searches} searches, write a 400-600 word report, "
-            f"and include full URL citations from tool outputs."
-        )
+        content=f"Research topic: {topic}. Write a 400-600 word report with full URL citations." 
     )
     
     error_msg = None
     final_state = None
     
     try:
-        final_state = graph_app.invoke({"messages": [initial_user_msg]})
+        final_state = graph_app.invoke({"messages": [initial_user_msg]},
+                                       config={"recursion_limit": 15}
+                                       )
     except Exception as e:
         error_msg = str(e)
 
