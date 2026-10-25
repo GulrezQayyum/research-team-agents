@@ -1,12 +1,17 @@
-# NOTES.md — System A Baseline Evaluation
+# System A Baseline Evaluation
+## Overview
+System A implements a basic ReAct loop structure in LangGraph. Benchmarking reveals key trade-offs between prompting rules, error recovery, and graph edge logic.
 
-## Top 3 Observed Weaknesses
+## Top 3 Structural Weaknesses
 
-1. **Unbounded Loop Vulnerability & Soft Limit Failures**
-   Prompt-based constraints ("AT MOST 4 searches") fail when search results return empty or fail. The LLM continuously retries queries, leading to potential `RecursionError` crashes unless capped in the graph routing edge.
+### 1. Off-By-One Tool Loop Edge Routing
+* **Mechanic:** Routing on `AIMessage.tool_calls` prior to tool execution truncates the graph turn count prematurely. 
+* **Impact:** Without counting executed `ToolMessage` payloads or routing through a dedicated tool-free synthesis node, the graph exits while an `AIMessage` containing tool calls is still pending. This causes silent execution failures (producing 0-word reports).
 
-2. **Silent Scraper Throttling & Rate-Limit Errors**
-   Unauthenticated HTML web searches (`ddgs`) trigger site timeouts and empty responses under back-to-back execution, causing the agent to hallucinate queries or return lower-quality reports.
+### 2. Search Provider Instability & Rate-Limit Thrashing
+* **Mechanic:** Unauthenticated HTML scraping (`ddgs`) experiences connection timeouts and rate limits under sequential multi-turn loops.
+* **Impact:** The LLM receives empty search string responses, misinterprets API errors as a lack of web content, and exhausts its iteration budget on repetitive variations of the same query.
 
-3. **Context Accumulation & Citation Hallucination**
-   Appending raw search payloads into `messages` inflates prompt tokens exponentially. When returned search payloads omit full URLs, the model fabricates plausible URL endpoints to satisfy system prompt rules.
+### 3. Token Accumulation & Citation Hallucination
+* **Mechanic:** Search results containing unstructured body text are stored linearly in conversation history (`messages`).
+* **Impact:** Prompt input tokens grow non-linearly over multiple turns. When tool results omit full link paths, the LLM hallucinates plausible URLs to meet prompt constraints.
