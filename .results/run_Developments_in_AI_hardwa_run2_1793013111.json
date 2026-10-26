@@ -1,0 +1,29 @@
+{
+  "run_id": 2,
+  "topic": "Developments in AI hardware inference accelerators",
+  "timestamp": "2026-10-26T16:11:51.511467",
+  "status_failed": true,
+  "failure_reason": "graph_exception",
+  "wall_time_sec": 26.82,
+  "llm_calls": 3,
+  "tool_calls": 3,
+  "input_tokens": 1754,
+  "output_tokens": 444,
+  "retrieved_urls": [
+    "https://best-ai.news/ai-hardware",
+    "https://best-ai.news/ai-hardware-releases-2026",
+    "https://brics-econ.org/next-gen-ai-hardware-2026-accelerators-hbm4-memory-and-networking-trends",
+    "https://pinggy.io/blog/fastest_ai_inference_hardware/",
+    "https://podcrafta.com/ai-hardware-updates-2026-top-breakthroughs-news/",
+    "https://www.insidedeeptech.com/the-best-ai-inference-chips-of-2026-a-detailed-comparison/",
+    "https://zylos.ai/research/2026-02-01-ai-chip-hardware-acceleration-2026/"
+  ],
+  "citation_eval": {
+    "cited_urls": [],
+    "valid_citations": [],
+    "hallucinated_citations": [],
+    "honesty_ratio": 1.0
+  },
+  "error_message": "Error code: 400 - {'error': {'message': \"Tool call validation failed: tool call validation failed: parameters for tool web_search did not match schema: errors: [missing properties: 'query']\", 'type': 'invalid_request_error', 'code': 'tool_use_failed', 'failed_generation': '{\"name\": \"web_search\", \"arguments\": {\"id\":\"https://best-ai.news/ai-hardware-releases-2026\"}}'}}",
+  "report": ""
+}

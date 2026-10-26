@@ -1,0 +1,25 @@
+{
+  "run_id": 3,
+  "topic": "Recent breakthroughs in solid-state battery commercialization",
+  "timestamp": "2026-10-26T16:10:54.364810",
+  "status_failed": true,
+  "failure_reason": "graph_exception",
+  "wall_time_sec": 0.9,
+  "llm_calls": 1,
+  "tool_calls": 1,
+  "input_tokens": 298,
+  "output_tokens": 58,
+  "retrieved_urls": [
+    "https://pubs.rsc.org/doi/d3qm01171b",
+    "https://pubs.rsc.org/qm/article/8/8/1861/822111/Recent-advances-in-all-solid-state-batteries-for",
+    "https://www.sciencedirect.com/science/article/pii/S2352152X26032093"
+  ],
+  "citation_eval": {
+    "cited_urls": [],
+    "valid_citations": [],
+    "hallucinated_citations": [],
+    "honesty_ratio": 1.0
+  },
+  "error_message": "Error code: 400 - {'error': {'message': \"Tool call validation failed: tool call validation failed: parameters for tool web_search did not match schema: errors: [missing properties: 'query']\", 'type': 'invalid_request_error', 'code': 'tool_use_failed', 'failed_generation': '{\"name\": \"web_search\", \"arguments\": {\"cursor\": 0, \"id\": 0}}'}}",
+  "report": ""
+}
