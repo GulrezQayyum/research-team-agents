@@ -1,0 +1,23 @@
+{
+  "run_id": 2,
+  "topic": "Recent breakthroughs in solid-state battery commercialization",
+  "timestamp": "2026-10-26T19:57:42.059512",
+  "status_failed": true,
+  "failure_reason": "graph_exception",
+  "wall_time_sec": 0.09,
+  "retries": 0,
+  "llm_calls": 0,
+  "tool_calls": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "retrieved_urls": [],
+  "citation_eval": {
+    "n_cited": 0,
+    "n_valid": 0,
+    "ratio": "N/A",
+    "no_citations": true,
+    "uncited_paragraphs": 0
+  },
+  "error_message": "Error code: 404 - {'error': {'message': 'The model `llama-3.3-70b-versatile` does not exist or you do not have access to it.', 'type': 'invalid_request_error', 'code': 'model_not_found'}}",
+  "report": ""
+}
