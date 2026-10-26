@@ -1,0 +1,23 @@
+{
+  "run_id": 1,
+  "topic": "Developments in AI hardware inference accelerators",
+  "timestamp": "2026-10-26T20:26:05.854235",
+  "status_failed": true,
+  "failure_reason": "rate_limit",
+  "wall_time_sec": 0.11,
+  "retries": 0,
+  "llm_calls": 0,
+  "tool_calls": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "retrieved_urls": [],
+  "citation_eval": {
+    "n_cited": 0,
+    "n_valid": 0,
+    "ratio": "N/A",
+    "no_citations": true,
+    "uncited_paragraphs": 0
+  },
+  "error_message": "Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01kk3q88j4enashet543d2v6q2` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198238, Requested 2341. Please try again in 4m10.128s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+  "report": ""
+}
