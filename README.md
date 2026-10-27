@@ -19,6 +19,7 @@ research-team-agents/
 ├── .tool_cache/       # Local disk cache for search tool results (ignored by git)
 ├── config.py          # Centralized LLM setup & TokenTracker class
 ├── tools.py           # Custom web search tool definition with exception handling & cache
+├── benchmark_groq.py  # Benchmark script
 ├── main.py            # Main entry point running Steps 1 through 4
 ├── requirements.txt   # Python project dependencies
 └── .gitignore         # Ignores .venv, .env, and .tool_cache/
