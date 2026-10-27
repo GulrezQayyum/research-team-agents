@@ -22,4 +22,4 @@ research-team-agents/
 ├── benchmark_groq.py  # Benchmark script
 ├── main.py            # Main entry point running Steps 1 through 4
 ├── requirements.txt   # Python project dependencies
-└── .gitignore         # Ignores .venv, .env, and .tool_cache/
+└── .gitignore         # Ignores .venv, .env, .results/ and .tool_cache/
