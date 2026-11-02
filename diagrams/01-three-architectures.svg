@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+  <defs>
+    <style>
+      .bg{fill:#101214}.panel{fill:#f7f3e9}.ink{fill:#222831;font-family:Arial,sans-serif}.title{font-size:30px;font-weight:700}.sub{font-size:16px;fill:#56606b}.label{font-size:18px;font-weight:700}.small{font-size:15px}.muted{fill:#65717c}.line{stroke:#374151;stroke-width:3;fill:none}.dash{stroke:#67727d;stroke-width:2;stroke-dasharray:8 7;fill:none}.pink{fill:#f6b2be}.blue{fill:#a9c8ee}.green{fill:#a9dfbf}.yellow{fill:#f5dc8e}.white{fill:#fff}.box{stroke:#374151;stroke-width:2;rx:14}.arrow{marker-end:url(#a)}
+    </style>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 Z" fill="#374151"/></marker>
+  </defs>
+  <rect class="bg" width="1200" height="720"/>
+  <rect class="panel" x="35" y="30" width="1130" height="660" rx="26"/>
+  <text class="ink title" x="75" y="82">Three ways to orchestrate a research agent</text>
+  <text class="ink sub" x="75" y="112">The same research task becomes more structured from A to C.</text>
+
+  <rect class="pink box" x="75" y="165" width="315" height="420"/>
+  <text class="ink label" x="105" y="210">System A</text>
+  <text class="ink small muted" x="105" y="238">Single-agent ReAct</text>
+  <rect class="white box" x="125" y="285" width="215" height="62"/>
+  <text class="ink label" x="160" y="323">Agent</text>
+  <rect class="white box" x="125" y="390" width="215" height="62"/>
+  <text class="ink label" x="151" y="428">Search tool</text>
+  <rect class="white box" x="125" y="495" width="215" height="62"/>
+  <text class="ink label" x="143" y="533">Final report</text>
+  <path class="line arrow" d="M232 347 L232 387"/><path class="line arrow" d="M232 452 L232 492"/>
+  <text class="ink small" x="105" y="620">Flexible, but shared context</text>
+
+  <rect class="blue box" x="443" y="165" width="315" height="420"/>
+  <text class="ink label" x="473" y="210">System B</text>
+  <text class="ink small muted" x="473" y="238">Fixed role-based pipeline</text>
+  <rect class="white box" x="475" y="280" width="250" height="55"/>
+  <text class="ink label" x="545" y="315">Researcher</text>
+  <rect class="white box" x="475" y="365" width="250" height="55"/>
+  <text class="ink label" x="564" y="400">Writer</text>
+  <rect class="white box" x="475" y="450" width="250" height="55"/>
+  <text class="ink label" x="554" y="485">Critic</text>
+  <path class="line arrow" d="M600 335 L600 362"/><path class="line arrow" d="M600 420 L600 447"/>
+  <path class="dash arrow" d="M725 478 C805 478 805 392 728 392"/>
+  <text class="ink small" x="475" y="550">Revision loop is bounded</text>
+  <text class="ink small" x="475" y="574">and state is explicit</text>
+
+  <rect class="green box" x="810" y="165" width="315" height="420"/>
+  <text class="ink label" x="840" y="210">System C</text>
+  <text class="ink small muted" x="840" y="238">Supervisor-controlled workflow</text>
+  <rect class="white box" x="865" y="275" width="205" height="62"/>
+  <text class="ink label" x="918" y="313">Supervisor</text>
+  <rect class="white box" x="835" y="390" width="110" height="55"/>
+  <text class="ink small" x="850" y="423">Researcher</text>
+  <rect class="white box" x="970" y="390" width="110" height="55"/>
+  <text class="ink small" x="997" y="423">Writer</text>
+  <rect class="white box" x="902" y="485" width="110" height="55"/>
+  <text class="ink small" x="930" y="518">Critic</text>
+  <path class="line arrow" d="M915 337 L885 386"/><path class="line arrow" d="M1020 337 L1030 386"/><path class="line arrow" d="M965 337 L957 481"/>
+  <text class="ink small" x="840" y="575">LLM proposes; code enforces</text>
+</svg>

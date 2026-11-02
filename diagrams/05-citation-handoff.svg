@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650">
+  <defs><style>.bg{fill:#101214}.panel{fill:#f7f3e9}.ink{fill:#222831;font-family:Arial,sans-serif}.title{font-size:30px;font-weight:700}.sub{font-size:16px;fill:#56606b}.label{font-size:20px;font-weight:700}.small{font-size:16px}.green{fill:#c4ebd0}.red{fill:#f3bdc8}.white{fill:#fff}.box{stroke:#374151;stroke-width:2;rx:16}.line{stroke:#374151;stroke-width:3;fill:none}.arrow{marker-end:url(#a)}</style><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 Z" fill="#374151"/></marker></defs>
+  <rect class="bg" width="1200" height="650"/><rect class="panel" x="35" y="30" width="1130" height="590" rx="26"/>
+  <text class="ink title" x="75" y="82">Where did System B's citations go?</text><text class="ink sub" x="75" y="112">Observed handoff behavior in the current implementation.</text>
+  <rect class="green box" x="95" y="220" width="300" height="145"/><text class="ink label" x="170" y="270">Researcher notes</text><text class="ink small" x="145" y="305">facts + snippets + URLs</text><text class="ink small" x="155" y="335">evidence exists here</text>
+  <rect class="red box" x="805" y="220" width="300" height="145"/><text class="ink label" x="900" y="270">Writer draft</text><text class="ink small" x="865" y="305">factual prose</text><text class="ink small" x="862" y="335">URLs often omitted</text>
+  <path class="line arrow" d="M395 292 L795 292"/><text class="ink label" x="530" y="260">plain-text handoff</text>
+  <rect class="white box" x="365" y="430" width="470" height="95"/><text class="ink label" x="475" y="470">Final citation metric</text><text class="ink small" x="438" y="500">few report URLs → low measured validity</text>
+  <path class="line arrow" d="M955 365 C955 420 830 455 840 475"/><text class="ink small" x="375" y="570">This is a handoff/instrumentation limitation, not proof that sources were never retrieved.</text>
+</svg>

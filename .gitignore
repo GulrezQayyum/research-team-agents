@@ -4,3 +4,7 @@
 __pycache__/
 *.pyc
 .results/
+
+# Generated benchmark outputs and local scoring artifacts.
+eval_results/*
+!eval_results/benchmark_topics.json

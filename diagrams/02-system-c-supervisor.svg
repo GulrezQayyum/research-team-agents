@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+  <defs>
+    <style>.bg{fill:#101214}.panel{fill:#f7f3e9}.ink{fill:#222831;font-family:Arial,sans-serif}.title{font-size:30px;font-weight:700}.sub{font-size:16px;fill:#56606b}.label{font-size:19px;font-weight:700}.small{font-size:15px}.pink{fill:#f6b2be}.blue{fill:#a9c8ee}.green{fill:#a9dfbf}.yellow{fill:#f5dc8e}.white{fill:#fff}.box{stroke:#374151;stroke-width:2;rx:14}.line{stroke:#374151;stroke-width:3;fill:none}.dash{stroke:#67727d;stroke-width:2;stroke-dasharray:8 7;fill:none}.arrow{marker-end:url(#a)}</style>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 Z" fill="#374151"/></marker>
+  </defs>
+  <rect class="bg" width="1200" height="720"/><rect class="panel" x="35" y="30" width="1130" height="660" rx="26"/>
+  <text class="ink title" x="75" y="82">Inside System C: proposed routes, enforced rules</text>
+  <text class="ink sub" x="75" y="112">The supervisor chooses a worker, but deterministic guards remain in control.</text>
+  <rect class="pink box" x="425" y="155" width="350" height="100"/>
+  <text class="ink label" x="505" y="198">Supervisor LLM</text><text class="ink small" x="478" y="227">next worker + short reason</text>
+  <rect class="green box" x="105" y="345" width="250" height="90"/><text class="ink label" x="170" y="385">Researcher</text><text class="ink small" x="137" y="412">bounded web search</text>
+  <rect class="blue box" x="475" y="345" width="250" height="90"/><text class="ink label" x="555" y="385">Writer</text><text class="ink small" x="510" y="412">draft or revise</text>
+  <rect class="yellow box" x="845" y="345" width="250" height="90"/><text class="ink label" x="922" y="385">Critic</text><text class="ink small" x="878" y="412">structured JSON review</text>
+  <path class="line arrow" d="M500 255 C430 290 300 300 240 342"/><path class="line arrow" d="M600 255 L600 342"/><path class="line arrow" d="M700 255 C770 290 900 300 970 342"/>
+  <path class="dash arrow" d="M355 390 C400 280 450 270 500 245"/><path class="dash arrow" d="M725 390 C760 270 730 260 700 245"/><path class="dash arrow" d="M845 390 C800 285 760 270 700 245"/>
+  <rect class="white box" x="130" y="520" width="940" height="95"/>
+  <text class="ink label" x="165" y="557">Deterministic safeguards</text>
+  <text class="ink small" x="165" y="585">no finish without a draft  •  no critic before a draft  •  revision cap  •  token budget  •  retries and error logging</text>
+  <text class="ink small" x="165" y="650">Solid arrows: selected route   |   Dashed arrows: return to supervisor after a worker step</text>
+</svg>

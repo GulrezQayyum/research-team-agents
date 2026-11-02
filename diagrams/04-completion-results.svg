@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650">
+  <defs><style>.bg{fill:#101214}.panel{fill:#f7f3e9}.ink{fill:#222831;font-family:Arial,sans-serif}.title{font-size:30px;font-weight:700}.sub{font-size:16px;fill:#56606b}.label{font-size:19px;font-weight:700}.small{font-size:15px}.track{fill:#d9dde1}.pink{fill:#c23d9c}.green{fill:#10a765}.red{fill:#e91e63}.box{stroke:#374151;stroke-width:2;rx:14}</style></defs>
+  <rect class="bg" width="1200" height="650"/><rect class="panel" x="35" y="30" width="1130" height="590" rx="26"/>
+  <text class="ink title" x="75" y="82">Who completed the task?</text><text class="ink sub" x="75" y="112">15 runs per system; rates describe this implementation, not universal architecture performance.</text>
+  <text class="ink label" x="90" y="190">System A</text><text class="ink label" x="1000" y="190">53.3% · 8/15</text><rect class="track box" x="90" y="210" width="1000" height="34"/><rect class="pink box" x="90" y="210" width="533" height="34"/>
+  <text class="ink label" x="90" y="315">System B</text><text class="ink label" x="1000" y="315">86.7% · 13/15</text><rect class="track box" x="90" y="335" width="1000" height="34"/><rect class="green box" x="90" y="335" width="867" height="34"/>
+  <text class="ink label" x="90" y="440">System C</text><text class="ink label" x="1000" y="440">73.3% · 11/15</text><rect class="track box" x="90" y="460" width="1000" height="34"/><rect class="red box" x="90" y="460" width="733" height="34"/>
+  <text class="ink small" x="90" y="560">A: 7 invalid tool-call failures   •   B: 1 invalid critic JSON + 1 rate-limit failure   •   C: 3 URL-validation failures + 1 recursion-limit failure</text>
+</svg>

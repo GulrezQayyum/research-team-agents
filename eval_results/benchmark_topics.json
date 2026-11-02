@@ -1,0 +1,22 @@
+[
+  {
+    "id": "topic_1_factual",
+    "prompt": "Explain the mechanics of photosystem II in oxygenic photosynthesis."
+  },
+  {
+    "id": "topic_2_overview",
+    "prompt": "Provide a comprehensive overview of quantum computing architectures in 2026."
+  },
+  {
+    "id": "topic_3_conflicting",
+    "prompt": "Analyze conflicting evidence regarding caffeine consumption and cardiovascular outcomes."
+  },
+  {
+    "id": "topic_4_recent",
+    "prompt": "Summarize key developments in global semiconductor trade policies over the past year."
+  },
+  {
+    "id": "topic_5_niche",
+    "prompt": "Trace the development and dialectal features of the Elfdalian language."
+  }
+]
